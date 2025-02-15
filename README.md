@@ -3,3 +3,4 @@ make a server folder and all the backed stacks in it. use express, mongo compass
 implement restful api using MVC (Models Views Controllers). Just my first FULL STACK Project and have funnn.
 
 Implemented client(Frontend) using React.js, Bootstrap, and font awesome librabries.
+Implemented a feature to read user from Database , and also used axios, cors and react router dom.
