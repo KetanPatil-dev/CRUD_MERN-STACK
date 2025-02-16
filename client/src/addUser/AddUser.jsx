@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./AddUser.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const AddUser = () => {
   const [user, setUsers] = useState({
@@ -20,8 +21,10 @@ const AddUser = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5959/api/user", user);
+    const res=  await axios.post("http://localhost:5959/api/user", user);
       console.log("User Created Successfully.");
+      setUsers(res)
+      toast.success(res.data.message,{position:"top-right"})
       navigate("/");
     } catch (err) {
       console.error("Error:", err);
