@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./User.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const User = () => {
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,7 +19,16 @@ const User = () => {
     };
     fetchData();
   }, []);
-
+    const deleteUser= async (userId)=>{
+      try {
+       const res= await axios.delete(`http://localhost:5959/api/delete/user/${userId}`)
+         setUsers((res)=>res.filter((user)=>user._id!==userId))
+         toast.success(res.data.message,{position:"top-right"})
+      } catch (error) {
+        console.error("ERROR",error)
+        
+      }
+    }
   return (
     <div className="userTable">
       <Link to="/add" type="button" class="btn btn-primary">
@@ -46,7 +57,7 @@ const User = () => {
                     <i class="fa-solid fa-pen-to-square"></i>
                   </Link>
 
-                  <button type="button" class="btn btn-danger">
+                  <button onClick={()=>deleteUser(user._id)} type="button" class="btn btn-danger">
                     {" "}
                     <i class="fa-solid fa-trash"></i>
                   </button>
