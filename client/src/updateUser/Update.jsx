@@ -23,7 +23,7 @@ const Update = () => {
         try {
             const res = await axios.get(`http://localhost:5959/api/user/${id}`);
             setUsers(res.data)
-            console.log("User Updated successfully")
+            
         } catch (error) {
             console.error("Error", error);
         }

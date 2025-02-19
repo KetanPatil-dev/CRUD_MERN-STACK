@@ -5,29 +5,30 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const AddUser = () => {
-  const [user, setUsers] = useState({
+  const [user, setUser] = useState({
     name: "",
     email: "",
-    address: "", // Include address in state
+    address: "", 
   });
 
   const navigate = useNavigate();
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-    setUsers({ ...user, [name]: value });
+    setUser({ ...user, [name]: value });
   };
 
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-    const res=  await axios.post("http://localhost:5959/api/user", user);
-      console.log("User Created Successfully.");
-      setUsers(res)
-      toast.success(res.data.message,{position:"top-right"})
+      const res = await axios.post("http://localhost:5959/api/user", user);
+
+      setUser({ name: "", email: "", address: "" }); // Reset form after submit
+      toast.success(res.data.message, { position: "top-right" });
       navigate("/");
     } catch (err) {
       console.error("Error:", err);
+      toast.error("Failed to add user");
     }
   };
 
@@ -44,6 +45,7 @@ const AddUser = () => {
             type="text"
             id="name"
             name="name"
+            value={user.name}
             onChange={inputHandler}
             autoComplete="off"
             placeholder="Enter your Name"
@@ -53,6 +55,7 @@ const AddUser = () => {
             type="email"
             id="email"
             name="email"
+            value={user.email}
             onChange={inputHandler}
             autoComplete="off"
             placeholder="Enter your Email"
@@ -62,6 +65,7 @@ const AddUser = () => {
             type="text"
             id="address"
             name="address"
+            value={user.address}
             onChange={inputHandler}
             autoComplete="off"
             placeholder="Enter your Address"
